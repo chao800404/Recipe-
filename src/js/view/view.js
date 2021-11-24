@@ -1,5 +1,5 @@
 import icons from 'url:../../img/icons.svg';
-import Fraction from '../../../node_modules/fractional';
+
 export default class View {
   _data;
   /**

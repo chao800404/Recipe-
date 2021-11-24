@@ -18,7 +18,7 @@
     "core-js": "^3.19.0",
     "date-fns": "^2.26.0",
     "flatpickr": "^4.6.9",
-    "fractional": "^1.0.0",
+    "mathjs": "^10.0.0",
     "prettier": "^2.4.1",
     "regenerator-runtime": "^0.13.9",
     "sass": "^1.43.4"

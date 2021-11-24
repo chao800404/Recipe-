@@ -1,7 +1,6 @@
 import icons from 'url:../../img/icons.svg';
 import View from './view';
-import { Fraction } from '../../../node_modules/fractional';
-
+import * as math from 'mathjs';
 class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
   _errorMessage = 'No recipes found for your query. Please try again!';
@@ -136,7 +135,7 @@ class RecipeView extends View {
                       </svg>
                       <div class="recipe__quantity">${
                         item.quantity
-                          ? new Fraction(item.quantity).toString()
+                          ? math.fraction(math.number(item.quantity)).toString()
                           : ''
                       } </div>
                       <div class="recipe__description">
