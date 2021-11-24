@@ -198,11 +198,11 @@ export const loadCalendarAPI = async function (calendarData) {
       },
       colorId: 3,
     };
-    const request = gapi.client.calendar.events.insert({
+    const request = await gapi.client.calendar.events.insert({
       calendarId: 'primary',
       resource: event,
     });
-    request.execute();
+    await request.execute();
   } catch (err) {
     console.log(err);
   }
