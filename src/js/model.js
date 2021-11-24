@@ -1,5 +1,6 @@
 import { async } from 'regenerator-runtime';
 import { API_URL, RES_PER_PAGE, KEY } from './config.js';
+import { CLIENT_ID, API_KEY, DISCOVERY_DOCS, SCOPES } from './calendarAPI.js';
 // import { getJSON, sendJSON } from './helpers.js';
 import { AJAX } from './helpers.js';
 
@@ -144,4 +145,67 @@ export const uploadRecipe = async function (newRecipe) {
   } catch (err) {
     throw err;
   }
+};
+
+export function handleClientLoad() {
+  gapi.load('client:auth2', initClient);
+}
+
+const initClient = async function () {
+  try {
+    await gapi.client.init({
+      apiKey: API_KEY,
+      clientId: CLIENT_ID,
+      discoveryDocs: DISCOVERY_DOCS,
+      scope: SCOPES,
+    });
+    console.log(gapi.auth2.getAuthInstance().isSignedIn.get());
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const loadCalendarAPI = async function (calendarData) {
+  try {
+    const dataArr = Object.entries(calendarData);
+    const { content, date, endTime, startTime, title } =
+      Object.fromEntries(dataArr);
+    const [year, mounth, day] = date.split('-');
+    const [startHour, startMin] = startTime.split(':');
+    const [endHour, endMin] = endTime.split(':');
+    const ingredient = state.recipe.ingredients.map(ing => {
+      const { quantity, unit, description } = ing;
+      return `${quantity}-${unit}${description}\n`;
+    });
+
+    const event = {
+      summary: title,
+      description: `${content}\n${ingredient.join().replaceAll(',', '')}`,
+      start: {
+        dateTime: new Date(year, mounth - 1, day, startHour, startMin),
+        timeZone: '',
+      },
+      end: {
+        dateTime: new Date(year, mounth - 1, day, endHour, endMin),
+        timeZone: '',
+      },
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: 'email', minutes: 24 * 60 },
+          { method: 'popup', minutes: 10 },
+        ],
+      },
+      colorId: 3,
+    };
+    const request = gapi.client.calendar.events.insert({
+      calendarId: 'primary',
+      resource: event,
+    });
+    request.execute();
+  } catch (err) {
+    console.log(err);
+  }
+  // console.log(dataArr);
+  // gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 };

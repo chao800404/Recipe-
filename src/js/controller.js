@@ -8,6 +8,7 @@ import resultsView from './view/resultsView.js';
 import paginationView from './view/paginationView.js';
 import bookmarksView from './view/bookmarksView.js';
 import addRecipeView from './view/addRecipeView.js';
+import calendarView from './view/calendarView.js';
 import 'core-js/stable';
 import 'regenerator-runtime';
 import { async } from 'regenerator-runtime';
@@ -18,6 +19,7 @@ import { async } from 'regenerator-runtime';
 // if (module.hot) {
 //   module.hot.accept();
 // }
+
 const controRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
@@ -85,10 +87,10 @@ const controlAddBookmark = function () {
 const controlBookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 };
+
 const controlAddRecipe = async function (recipe) {
   try {
     await model.uploadRecipe(recipe);
-    console.log(model.state.recipe);
     // Show loading spinner
     recipeView.renderSpinner();
     //Render recipe
@@ -109,8 +111,24 @@ const controlAddRecipe = async function (recipe) {
     addRecipeView.renderError(err);
   }
 };
+const controlRenderAddRecipeForm = function () {
+  addRecipeView.render();
+  // model.uploadRecipe(recipe);
+  addRecipeView.toggleWindow();
+};
+
+const controlCalendarResponse = function (calendarData) {
+  model.loadCalendarAPI(calendarData);
+  calendarView.renderMessage();
+};
+const controlCalendar = function () {
+  calendarView.render();
+  calendarView.toggleWindow();
+};
 
 const init = function () {
+  calendarView.addHandlerRenderCalendar(controlCalendar);
+  addRecipeView.addHandlerShowWindow(controlRenderAddRecipeForm);
   bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
@@ -118,5 +136,7 @@ const init = function () {
   SearchView.addHandlerSearch(controlSearchResult);
   paginationView.addHandlerClick(controlPagination);
   addRecipeView.addHandleUpload(controlAddRecipe);
+  calendarView.addUploadCalendar(controlCalendarResponse);
+  window.addEventListener('load', model.handleClientLoad);
 };
 init();

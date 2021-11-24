@@ -1,7 +1,7 @@
 import icons from 'url:../../img/icons.svg';
 import View from './view';
-// const Fraction = require('fractional').Fraction;
 import { Fraction } from 'fractional';
+
 class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
   _errorMessage = 'No recipes found for your query. Please try again!';
@@ -20,6 +20,7 @@ class RecipeView extends View {
       if (+updateTo > 0) handler(+updateTo);
     });
   }
+
   addHandlerBookmark(handler) {
     this._parentElement.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--bookmark');
@@ -82,6 +83,12 @@ class RecipeView extends View {
                       <use href="${icons}#icon-user"></use>
                     </svg>
                   </div>
+                  <button class ="btn--round btn--calendar">
+                    <svg>
+                      <use href="${icons}#icon-calendar"></use>
+                    </svg>
+                  </button>
+
                   <button class="btn--round btn--bookmark">
                     <svg class="">
                       <use href="${icons}#icon-bookmark${
