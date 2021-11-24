@@ -117,8 +117,8 @@ const controlRenderAddRecipeForm = function () {
   addRecipeView.toggleWindow();
 };
 
-const controlCalendarResponse = function (calendarData) {
-  model.loadCalendarAPI(calendarData);
+const controlCalendarResponse = async function (calendarData) {
+  await model.loadCalendarAPI(calendarData);
   calendarView.renderMessage();
 };
 const controlCalendar = function () {
