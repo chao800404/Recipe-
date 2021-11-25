@@ -138,5 +138,6 @@ const init = function () {
   addRecipeView.addHandleUpload(controlAddRecipe);
   calendarView.addUploadCalendar(controlCalendarResponse);
   window.addEventListener('load', model.handleClientLoad);
+  calendarView.newGoogleCalenderWindow();
 };
 init();

@@ -1,10 +1,13 @@
 import View from './view';
 import flatpickr from 'flatpickr';
+import { config } from 'mathjs';
 
 class CalendarView extends View {
   _parentElement = document.querySelector('.add-recipe-window');
   _overlay = document.querySelector('.overlay');
   _message = 'Ingredient was succesfully add calendar';
+
+  _newWindow = document.querySelector('.nav__btn--open--calendar');
   constructor() {
     super();
     this._addHandlerHiddenWindow();
@@ -98,6 +101,15 @@ class CalendarView extends View {
   _handleAuthClick(isSignedIn) {
     if (isSignedIn) return;
     gapi.auth2.getAuthInstance().signIn();
+  }
+  newGoogleCalenderWindow() {
+    this._newWindow.addEventListener('click', () => {
+      window.open(
+        'https://calendar.google.com/calendar/u/0/r',
+        'Calendar',
+        'heigth:800,width:800'
+      );
+    });
   }
 }
 
