@@ -49,10 +49,10 @@ const controlSearchResult = async function () {
     await model.loadSearchResults(qurey);
     // 3) Render results
     resultsView.render(model.getSearchResultPage());
-    console.log(model.state.search.result);
+    // console.log(model.state.search.result);
     // 4) Render initial pagination buttons
     paginationView.render(model.state.search);
-    console.log(model.state.recipe);
+    // console.log(model.state.recipe);
   } catch (err) {
     console.log(err);
   }
