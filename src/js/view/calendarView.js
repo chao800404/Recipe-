@@ -1,6 +1,5 @@
 import View from './view';
 import flatpickr from 'flatpickr';
-import { config } from 'mathjs';
 
 class CalendarView extends View {
   _parentElement = document.querySelector('.add-recipe-window');

@@ -91,7 +91,7 @@ export const addBookmark = function (recipe) {
   state.bookmarks.push(recipe);
   //Mark current recipe as bookmark
   if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
-  console.log(state.bookmarks);
+  // console.log(state.bookmarks);
   persistBookmarks();
 };
 
@@ -138,7 +138,7 @@ export const uploadRecipe = async function (newRecipe) {
       servings: +newRecipe.servings,
       ingredients,
     };
-    console.log(recipe);
+    // console.log(recipe);
     const data = await AJAX(`${API_URL}?key=${KEY}`, recipe);
     state.recipe = createRecipeObject(data);
     addBookmark(state.recipe);
@@ -159,7 +159,7 @@ const initClient = async function () {
       discoveryDocs: DISCOVERY_DOCS,
       scope: SCOPES,
     });
-    console.log(gapi.auth2.getAuthInstance().isSignedIn.get());
+    // console.log(gapi.auth2.getAuthInstance().isSignedIn.get());
   } catch (err) {
     console.log(err);
   }
